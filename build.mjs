@@ -1,8 +1,11 @@
 import { marked } from "marked";
-import { readFileSync, writeFileSync, mkdirSync } from "node:fs";
+import { readFileSync, writeFileSync, mkdirSync, copyFileSync } from "node:fs";
 
 const APP = ".";
 mkdirSync("dist", { recursive: true });
+for (const f of ["favicon.svg", "favicon.ico", "favicon.png", "apple-touch-icon.png"]) {
+  try { copyFileSync(f, `dist/${f}`); } catch {}
+}
 
 // The animated Merkat — a DOM port of src/components/MeerkatLogo.js
 // (blink + chew + a blade of grass grazed down out of the mouth and regrown).
@@ -49,6 +52,9 @@ const shell = ({ title, body, hero = false }) => `<!doctype html>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="alternate icon" href="/favicon.ico" sizes="any">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <title>${title}</title>
 <style>
   :root { color-scheme: light; }
