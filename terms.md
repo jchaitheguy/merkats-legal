@@ -101,4 +101,4 @@ We may update these terms; material changes will be noted in the app.
 
 ## 11. Contact
 
-Questions, abuse reports, or legal notices: **jchai8985@gmail.com**
+Questions, abuse reports, or legal notices: **support@merkats.app**

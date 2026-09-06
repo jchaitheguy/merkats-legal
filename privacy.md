@@ -89,4 +89,4 @@ recovery email on file.
 
 ## Contact
 
-Questions or deletion requests: **jchai8985@gmail.com**
+Questions or deletion requests: **support@merkats.app**
