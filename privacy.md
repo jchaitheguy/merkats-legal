@@ -1,3 +1,7 @@
+---
+title: Privacy Policy
+---
+
 # Merkats — Privacy Policy
 
 _Last updated: 2026-09-06_
