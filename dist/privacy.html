@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Merkats — Privacy Policy</title>
+<style>
+  :root { color-scheme: light; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: #E5EEE4; color: #33403A;
+    font: 16px/1.6 -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased; }
+  a { color: #A85F5F; }
+  
+.mk{position:relative;--s:120px}
+.mk>div,.mk>.anim{position:absolute}
+@keyframes mk-blink{0%,90%,100%{height:0}93%,96%{height:calc(var(--s)*0.15)}}
+@keyframes mk-chew{0%,100%{height:calc(var(--s)*0.03)}50%{height:calc(var(--s)*0.08)}}
+@keyframes mk-graze{0%{height:calc(var(--s)*0.44)}55%{height:calc(var(--s)*0.05)}56%{height:calc(var(--s)*0.44)}100%{height:calc(var(--s)*0.44)}}
+@keyframes mk-leaf{0%,53%{opacity:1}54%,55%{opacity:0}57%,100%{opacity:1}}
+@media (prefers-reduced-motion:reduce){.mk .anim{animation:none!important}}
+
+  .page { max-width: 680px; margin: 0 auto; padding: 40px 22px 72px; }
+  /* home */
+  .hero { min-height: 90vh; display: flex; flex-direction: column; align-items: center;
+    justify-content: center; text-align: center; gap: 14px; }
+  .hero h1 { font-size: 34px; font-weight: 800; margin: 6px 0 0; letter-spacing: -0.5px; }
+  .hero p { color: #5b6b62; max-width: 30rem; margin: 0; }
+  .hero .links { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; margin-top: 10px; }
+  .hero .links a { background: #C77D7D; color: #fff; text-decoration: none;
+    padding: 11px 20px; border-radius: 12px; font-weight: 600; }
+  .hero .mail { color: #6E7D71; font-size: 14px; }
+  /* legal docs — no card, plain on the ground */
+  .doc h1 { font-size: 26px; margin: 0 0 2px; }
+  .doc h2 { font-size: 18px; margin: 26px 0 6px; }
+  .doc h3 { font-size: 15px; margin: 18px 0 4px; }
+  .doc p, .doc li { color: #3d4a44; }
+  .doc em { color: #6E7D71; font-style: normal; font-size: 14px; }
+  .doc hr { border: none; border-top: 1px solid #cdddd2; margin: 26px 0; }
+  .doc code { background: #dce8de; padding: 1px 5px; border-radius: 4px; font-size: 90%; }
+  .back { display: inline-block; color: #6E7D71; text-decoration: none; font-weight: 600;
+    font-size: 14px; margin-bottom: 22px; }
+  .tail { margin-top: 34px; font-size: 13px; color: #6E7D71; }
+  .tail a { color: #6E7D71; }
+</style>
+</head>
+<body>
+<div class="page doc"><a class="back" href="/">&larr; Merkats</a>
+<h1>Merkats — Privacy Policy</h1>
+<p><em>Last updated: 2026-09-06</em></p>
+<p>Merkats is a small app for running a shared-cooking community — scheduling
+meals, taking turns on chores, and chatting with your group. This policy
+explains what it stores and why.</p>
+<h2>What we collect</h2>
+<ul>
+<li><strong>Account:</strong> a username, an email address, and a password (stored only as a
+secure hash by our authentication provider — we never see it). You may also
+add a separate recovery email.</li>
+<li><strong>Profile you provide:</strong> display name, avatar, short bio, dietary
+restrictions, and any &quot;fun facts&quot; you choose to add.</li>
+<li><strong>Community activity:</strong> the communities you create or join, meal times,
+chores, your meal-poll responses, the two chore proof photos you submit each
+week, dish photos and recipe links, group and direct messages, message
+reactions, friend connections, appreciation notes (&quot;kudos&quot;), and the list of
+users you have blocked.</li>
+<li><strong>Safety reports:</strong> if you report a message or profile, we store the report,
+a snapshot of the reported content, and your account id.</li>
+<li><strong>Photos:</strong> profile pictures, community pictures, dish photos, and chore
+proof photos that you take or select.</li>
+<li><strong>Usage events:</strong> a record of key actions (e.g. &quot;joined a community&quot;,
+&quot;voted on a meal&quot;, &quot;submitted a chore&quot;) used to understand how the app is
+used and improve it.</li>
+</ul>
+<p>We do <strong>not</strong> collect your contacts, precise location, advertising
+identifiers, or browsing activity, and we do <strong>not</strong> track you across other
+apps or websites.</p>
+<h2>How it&#39;s stored</h2>
+<ul>
+<li>Data is stored in our backend database (Supabase, hosted in the region
+chosen for the project) and a media bucket for photos.</li>
+<li>Your recovery email is stored <strong>encrypted</strong>; it is not readable by other
+users or in normal database access.</li>
+<li>The app also keeps a copy on your device so it works offline.</li>
+</ul>
+<h2>Who can see it</h2>
+<ul>
+<li><strong>Other members of your communities</strong> can see your username, display name,
+avatar, bio, fun facts, dietary restrictions, kudos about you, and the
+messages and content you post in that community. Admins of a community can
+additionally see chore submissions and manage members.</li>
+<li><strong>Direct messages</strong> are visible to you and the recipient.</li>
+<li>The app developer can access aggregate usage data and, for support and
+safety, the underlying records. Encrypted fields (recovery email) are only
+accessible to the developer.</li>
+<li>We do not sell your data or share it with advertisers.</li>
+</ul>
+<h2>Chore proof photos</h2>
+<p>Chore proof photos are automatically deleted at the end of each weekly cycle
+(or when the next cycle begins). They are not kept indefinitely.</p>
+<h2>Safety and moderation</h2>
+<p>Merkats has zero tolerance for abusive, harassing, or otherwise objectionable
+content. In the app you can <strong>block</strong> any user (they can no longer message you
+or see your profile, and you no longer see theirs) and <strong>report</strong> any message
+or profile. Reports are reviewed within 24 hours; content that violates our
+terms is removed and the responsible account may be suspended or deleted.</p>
+<h2>Your choices</h2>
+<ul>
+<li><strong>Edit or remove</strong> most profile information any time in the app.</li>
+<li><strong>Block or report</strong> any user from their profile or a message.</li>
+<li><strong>Leave a community</strong> to stop sharing new activity with it.</li>
+<li><strong>Delete your account:</strong> Profile → Delete account removes your profile,
+memberships, messages, photos, and encrypted data. You can also email the
+address below. Some content you posted in shared community spaces may remain
+in an anonymised form.</li>
+</ul>
+<h2>Children</h2>
+<p>Merkats is not directed to children under 13 and we do not knowingly collect
+information from them.</p>
+<h2>Changes</h2>
+<p>We may update this policy; material changes will be noted in the app or via the
+recovery email on file.</p>
+<h2>Contact</h2>
+<p>Questions or deletion requests: <strong><a href="mailto:support@merkats.app">support@merkats.app</a></strong></p>
+
+<p class="tail"><a href="/privacy">Privacy</a> &middot; <a href="/terms">Terms</a> &middot; support@merkats.app</p></div>
+</body>
+</html>

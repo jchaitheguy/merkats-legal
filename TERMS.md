@@ -1,7 +1,3 @@
----
-title: Terms of Service
----
-
 # Merkats — Terms of Service
 
 _Last updated: 2026-09-06_

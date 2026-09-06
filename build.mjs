@@ -1,0 +1,110 @@
+import { marked } from "marked";
+import { readFileSync, writeFileSync, mkdirSync } from "node:fs";
+
+const APP = ".";
+mkdirSync("dist", { recursive: true });
+
+// The animated Merkat — a DOM port of src/components/MeerkatLogo.js
+// (blink + chew + a blade of grass grazed down out of the mouth and regrown).
+const MEERKAT_CSS = `
+.mk{position:relative;--s:120px}
+.mk>div,.mk>.anim{position:absolute}
+@keyframes mk-blink{0%,90%,100%{height:0}93%,96%{height:calc(var(--s)*0.15)}}
+@keyframes mk-chew{0%,100%{height:calc(var(--s)*0.03)}50%{height:calc(var(--s)*0.08)}}
+@keyframes mk-graze{0%{height:calc(var(--s)*0.44)}55%{height:calc(var(--s)*0.05)}56%{height:calc(var(--s)*0.44)}100%{height:calc(var(--s)*0.44)}}
+@keyframes mk-leaf{0%,53%{opacity:1}54%,55%{opacity:0}57%,100%{opacity:1}}
+@media (prefers-reduced-motion:reduce){.mk .anim{animation:none!important}}
+`;
+
+const meerkat = (size) => `<div class="mk" style="--s:${size}px;width:${size}px;height:${size * 1.12}px" aria-label="Merkat">
+  <div style="left:2%;top:20%;width:26%;height:26%;border-radius:50%;background:#B98A50"></div>
+  <div style="right:2%;top:20%;width:26%;height:26%;border-radius:50%;background:#B98A50"></div>
+  <div style="left:9%;top:16%;width:82%;height:72%;border-radius:44%;background:#D2A56B"></div>
+  <div style="left:30%;top:50%;width:40%;height:36%;border-radius:50%;background:#F0DCBB"></div>
+  <div style="left:19%;top:30%;width:24%;height:20%;border-radius:50%;background:#5E4327;opacity:.26"></div>
+  <div style="right:19%;top:30%;width:24%;height:20%;border-radius:50%;background:#5E4327;opacity:.26"></div>
+  <div style="left:24%;top:31%;width:18%;height:18%;border-radius:50%;background:#fff"></div>
+  <div style="right:24%;top:31%;width:18%;height:18%;border-radius:50%;background:#fff"></div>
+  <div style="left:29%;top:35%;width:10%;height:10%;border-radius:50%;background:#241A0E"></div>
+  <div style="right:29%;top:35%;width:10%;height:10%;border-radius:50%;background:#241A0E"></div>
+  <div style="left:31%;top:36%;width:3.5%;height:3.5%;border-radius:50%;background:#fff"></div>
+  <div style="right:35%;top:36%;width:3.5%;height:3.5%;border-radius:50%;background:#fff"></div>
+  <div class="anim" style="left:24%;top:31%;width:18%;height:0;border-radius:40%;background:#D2A56B;animation:mk-blink 4.6s infinite"></div>
+  <div class="anim" style="right:24%;top:31%;width:18%;height:0;border-radius:40%;background:#D2A56B;animation:mk-blink 4.6s infinite"></div>
+  <div style="left:16%;top:52%;width:14%;height:10%;border-radius:50%;background:#E79C93;opacity:.55"></div>
+  <div style="right:16%;top:52%;width:14%;height:10%;border-radius:50%;background:#E79C93;opacity:.55"></div>
+  <div style="left:44%;top:55%;width:12%;height:9%;border-radius:50%;background:#3B2A1B"></div>
+  <div style="left:38%;top:64%;width:24%;height:9%;overflow:hidden">
+    <div style="position:absolute;left:0;top:-70%;width:100%;height:200%;border-radius:50%;border:calc(var(--s)*0.02) solid #7A5A3A"></div>
+  </div>
+  <div class="anim" style="left:46%;top:72%;width:9%;height:calc(var(--s)*0.03);border-radius:45%;background:#6B3F26;animation:mk-chew 4s infinite"></div>
+  <div class="anim" style="left:47.5%;bottom:30%;width:5%;height:calc(var(--s)*0.44);animation:mk-graze 4s infinite;overflow:visible">
+    <div style="position:absolute;bottom:0;width:100%;height:100%;border-radius:40%;background:#7FBF63"></div>
+    <div class="anim" style="position:absolute;top:-6%;left:80%;width:130%;height:60%;border-radius:50%;background:#8FCE70;transform:rotate(28deg);animation:mk-leaf 4s infinite"></div>
+  </div>
+</div>`;
+
+const shell = ({ title, body, hero = false }) => `<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>${title}</title>
+<style>
+  :root { color-scheme: light; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: #E5EEE4; color: #33403A;
+    font: 16px/1.6 -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased; }
+  a { color: #A85F5F; }
+  ${MEERKAT_CSS}
+  .page { max-width: 680px; margin: 0 auto; padding: 40px 22px 72px; }
+  /* home */
+  .hero { min-height: 90vh; display: flex; flex-direction: column; align-items: center;
+    justify-content: center; text-align: center; gap: 14px; }
+  .hero h1 { font-size: 34px; font-weight: 800; margin: 6px 0 0; letter-spacing: -0.5px; }
+  .hero p { color: #5b6b62; max-width: 30rem; margin: 0; }
+  .hero .links { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; margin-top: 10px; }
+  .hero .links a { background: #C77D7D; color: #fff; text-decoration: none;
+    padding: 11px 20px; border-radius: 12px; font-weight: 600; }
+  .hero .mail { color: #6E7D71; font-size: 14px; }
+  /* legal docs — no card, plain on the ground */
+  .doc h1 { font-size: 26px; margin: 0 0 2px; }
+  .doc h2 { font-size: 18px; margin: 26px 0 6px; }
+  .doc h3 { font-size: 15px; margin: 18px 0 4px; }
+  .doc p, .doc li { color: #3d4a44; }
+  .doc em { color: #6E7D71; font-style: normal; font-size: 14px; }
+  .doc hr { border: none; border-top: 1px solid #cdddd2; margin: 26px 0; }
+  .doc code { background: #dce8de; padding: 1px 5px; border-radius: 4px; font-size: 90%; }
+  .back { display: inline-block; color: #6E7D71; text-decoration: none; font-weight: 600;
+    font-size: 14px; margin-bottom: 22px; }
+  .tail { margin-top: 34px; font-size: 13px; color: #6E7D71; }
+  .tail a { color: #6E7D71; }
+</style>
+</head>
+<body>
+${hero ? body : `<div class="page doc">${body}</div>`}
+</body>
+</html>`;
+
+const md = (f) => marked.parse(readFileSync(`${APP}/${f}`, "utf8"));
+
+writeFileSync("dist/index.html", shell({
+  title: "Merkats",
+  hero: true,
+  body: `<div class="hero">
+  ${meerkat(150)}
+  <h1>Merkats</h1>
+  <p>Plan shared meals, split the chores, and see who's in for dinner &mdash; for houses, halls and friend groups that cook together.</p>
+  <div class="links"><a href="/privacy">Privacy Policy</a><a href="/terms">Terms of Service</a></div>
+  <p class="mail">Questions or abuse reports: <a href="mailto:support@merkats.app">support@merkats.app</a></p>
+</div>`,
+}));
+
+for (const [file, out] of [["PRIVACY.md", "privacy.html"], ["TERMS.md", "terms.html"]]) {
+  writeFileSync(`dist/${out}`, shell({
+    title: file === "PRIVACY.md" ? "Merkats — Privacy Policy" : "Merkats — Terms of Service",
+    body: `<a class="back" href="/">&larr; Merkats</a>\n${md(file)}\n<p class="tail"><a href="/privacy">Privacy</a> &middot; <a href="/terms">Terms</a> &middot; support@merkats.app</p>`,
+  }));
+}
+console.log("built dist/: index.html, privacy.html, terms.html");

@@ -1,8 +1,0 @@
----
-title: Merkats
----
-
-# Merkats
-
-- [Privacy Policy](privacy)
-- [Terms of Service](terms)
