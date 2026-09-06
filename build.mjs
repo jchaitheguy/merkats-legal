@@ -3,7 +3,7 @@ import { readFileSync, writeFileSync, mkdirSync, copyFileSync } from "node:fs";
 
 const APP = ".";
 mkdirSync("dist", { recursive: true });
-for (const f of ["favicon.svg", "favicon.ico", "favicon.png", "apple-touch-icon.png"]) {
+for (const f of ["favicon.svg", "favicon.ico", "favicon.png", "apple-touch-icon.png", "appstore-badge.svg"]) {
   try { copyFileSync(f, `dist/${f}`); } catch {}
 }
 
@@ -74,6 +74,8 @@ const shell = ({ title, body, hero = false }) => `<!doctype html>
   .hero .links a { background: #C77D7D; color: #fff; text-decoration: none;
     padding: 11px 20px; border-radius: 12px; font-weight: 600; }
   .hero .mail { color: #6E7D71; font-size: 14px; }
+  .hero .badge { display: inline-block; margin-top: 6px; }
+  .hero .badge img { display: block; height: 52px; width: auto; }
   /* legal docs — no card, plain on the ground */
   .doc h1 { font-size: 26px; margin: 0 0 2px; }
   .doc h2 { font-size: 18px; margin: 26px 0 6px; }
@@ -95,6 +97,20 @@ ${hero ? body : `<div class="page doc">${body}</div>`}
 
 const md = (f) => marked.parse(readFileSync(`${APP}/${f}`, "utf8"));
 
+// TODO once the app is live on the App Store:
+//  1. Set APP_STORE_URL to the product page: https://apps.apple.com/app/id<APP_ID>
+//  2. Download the official black badge SVG from
+//     https://developer.apple.com/app-store/marketing/guidelines/ (or
+//     https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/en-us)
+//     -> save as ./appstore-badge.svg (build.mjs copies ./assets it finds)
+//  3. It renders automatically below the tagline. Don't recolor/reshape the badge.
+const APP_STORE_URL = ""; // e.g. "https://apps.apple.com/us/app/merkats/id0000000000"
+const appStoreBadge = APP_STORE_URL
+  ? `<a class="badge" href="${APP_STORE_URL}" target="_blank" rel="noopener"
+       aria-label="Download Merkats on the App Store"><img src="/appstore-badge.svg"
+       alt="Download on the App Store" width="180" height="60"></a>`
+  : "";
+
 writeFileSync("dist/index.html", shell({
   title: "Merkats",
   hero: true,
@@ -102,6 +118,7 @@ writeFileSync("dist/index.html", shell({
   ${meerkat(150)}
   <h1>Merkats</h1>
   <p>Plan shared meals, split the chores, and see who's in for dinner &mdash; for houses, halls and friend groups that cook together.</p>
+  ${appStoreBadge}
   <div class="links"><a href="/privacy">Privacy Policy</a><a href="/terms">Terms of Service</a></div>
   <p class="mail">Questions or abuse reports: <a href="mailto:support@merkats.app">support@merkats.app</a></p>
 </div>`,
